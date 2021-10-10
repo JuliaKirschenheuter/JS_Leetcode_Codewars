@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<script>
+    'use strict';
+
+    //https://leetcode.com/problems/check-if-all-characters-have-equal-number-of-occurrences/
+
+    const areOccurrencesEqual = function(s) {
+        let strMap = new Map();
+        s.split('').forEach(el => {
+            if (strMap.has(el)) {
+                let newIndex = strMap.get(el)
+                strMap.set(el, ++newIndex);
+            } else {
+                strMap.set(el, 1);
+            }
+        })
+
+        let entries = [...strMap.values()];
+        return  entries.every(val => val === entries[0])
+    };
+
+    console.log(areOccurrencesEqual("abadcabdccbd"));
+
+</script>
+
+</body>
+</html>
