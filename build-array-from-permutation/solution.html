@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<script>
+    'use strict';
+
+    //https://leetcode.com/problems/build-array-from-permutation/
+
+    let buildArray = function(nums) {
+        return nums.map((el, i, arr) => {
+            return arr[el]
+        });
+    };
+
+    console.log(buildArray([5,0,1,2,3,4]))
+
+</script>
+
+</body>
+</html>
