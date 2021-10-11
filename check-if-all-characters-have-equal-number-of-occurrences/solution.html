@@ -16,7 +16,7 @@
         s.split('').forEach(el => {
             if (strMap.has(el)) {
                 let newIndex = strMap.get(el)
-                strMap.set(el, ++newIndex);
+                strMap.set(el, newIndex+1);
             } else {
                 strMap.set(el, 1);
             }
