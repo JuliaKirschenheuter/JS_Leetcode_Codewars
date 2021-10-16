@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script>
+    'use strict';
+
+    // Реализовать функцию вычисления времени работы другой асинхронной функции
+    //     `runWithMeasuring(func, ...args): Promise<{ result, error, duration }>`
+    //
+    // 1. На вход функции передаётся асинхронная функция `func` и аргументы `agrs`
+    // 2. `runWithMeasuring` запускает эту асинхронную функцию `func` с аргументами `args`
+    // 3. Функция возвращает Promise, который резолвится с обхектом со следующими полями
+    // 1. `result` - результат асинхронной функции, при наличии
+    // 2. `error` - ошибка в выполнении асинхронной функции, при наличии
+    // 3. `duration` - время в миллисекундах выполнения функции
+
+    function runWithMeasuring(func, ...args) {
+        const timeBeforeFunctionRun = Date.now();
+        return func.apply(this, args).then(result => {
+            const timeAfterFunctionRun = Date.now()
+            return {
+                result: result,
+                error: null,
+                duration: Math.floor(timeAfterFunctionRun - timeBeforeFunctionRun)
+            }
+        })
+    }
+
+    // for tests
+    function sleep(ms) {
+        return new Promise(resolve => {
+            setTimeout(resolve, ms)
+        })
+    }
+
+    // runWithMeasuring(sleep, 2000).then(result => console.log(result));
+    runWithMeasuring(window.axios.get, 'https://jsonplaceholder.typicode.com/todos').then(result => console.log(result))
+
+
+</script>
+
+</body>
+</html>
