@@ -12,28 +12,20 @@
     //https://leetcode.com/problems/final-value-of-variable-after-performing-operations/submissions/
 
     //
-    // const finalValueAfterOperations = function(operations) {
-    //     // map better?
-    //     return operations.filter(operation => {
-    //         if (operation === "X++" ||  operation === "++X") {
-    //             operation = 1
-    //         } else  if (operation === "X--" ||  operation === "--X") {
-    //             operation = -1
-    //         }
-    //         return operation
-    //     }).reduce((prev, curr) => prev + curr)
-    // };
-
-    const finalValueAfterOperations = function (operations) {
-        return operations.reduce((accumulator, curr) => {
-            if (curr === "X++" || curr === "++X") {
-                curr = 1
-            } else if (curr === "X--" || curr === "--X") {
-                curr = -1
-            }
-            return accumulator + curr
-        }, 0)
+    const finalValueAfterOperations = function(operations) {
+        return operations.length - operations.filter(x => x.includes('-')).length * 2;
     };
+
+    // const finalValueAfterOperations = function (operations) {
+    //     return operations.reduce((accumulator, curr) => {
+    //         if (curr === "X++" || curr === "++X") {
+    //             curr = 1
+    //         } else if (curr === "X--" || curr === "--X") {
+    //             curr = -1
+    //         }
+    //         return accumulator + curr
+    //     }, 0)
+    // };
 
     console.log(finalValueAfterOperations( ["--X","++X","X++"]))
 
