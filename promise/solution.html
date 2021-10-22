@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<script>
+    'use strict';
+
+    const STATUS_PENDING = 'pending';
+    const STATUS_FULFILLED = 'fulfilled';
+    const STATUS_REJECTED = 'rejected';
+
+    class MyPromise {
+        constructor (executor) {
+            this._state = STATUS_PENDING;
+            this._result = undefined;
+            this._successCallbacks = [];
+            this._errorCallbacks = [];
+
+            //executor должен вызываться асинхронно
+            setTimeout(() => {
+                executor(this.resolve.bind(this), this.reject.bind(this));
+            }, 0)
+        }
+
+        resolve (value) {
+            this._state = STATUS_FULFILLED;
+            this._result = value;
+            // если было несколько ф-й (например несколько then, не цепочка), то выполнить надо все функции
+            this._successCallbacks.forEach(callback => callback())
+        }
+
+        reject (error) {
+            this._state = STATUS_REJECTED;
+            this._result = error;
+            this._successCallbacks.forEach(callback => callback())
+        }
+
+        then (onSuccess) {
+
+            // этот promis не связан с оригинальным promis'ом - он связан с результатом обработки завершения оригинального promis'а
+            return new MyPromise((resolve, reject) => {
+                // let handleSuccess = () => {}; // callback нашего then (условно будующий resolve)
+                //необходимо перезапустить ф-ии executor'a с новыми onSuccess и onError и новыми данными
+                let handleSuccess = () => {
+                    try {
+                        let result = onSuccess(this._result); // onSuccess может вернуться либо успешно либо нет
+                        if (result instanceof MyPromise) {
+                            result.then(resolve) // обещание того, что мы выполним resolve
+                            result.catch(reject)
+                        } else {
+                            resolve(result) // вызываем НОВЫЙ resolve который вернул then с новыми данными и пересохраняем this._result для последующих вызовов
+                        }
+                    } catch (err) { // если рещультат вызова onSuccess не был успешен
+                        reject(err)
+                    }
+                }
+                if (this._state === STATUS_PENDING) {
+                    this._successCallbacks.push(handleSuccess) // добавь новую ф-ю в список на исполение, если оригинальный promise еще не завершился
+                }
+
+                if (this._state === STATUS_FULFILLED) {
+                    handleSuccess() // вызови новый переданный callback с прежде имеющимся рзультатом (от оригинального promise)
+                }
+            })
+
+        }
+
+        catch (onError) {
+
+        }
+
+        finally (onFinally) {
+
+        }
+    }
+
+    const echo = (data, ms) => new MyPromise((resolve) => setTimeout(() => resolve(data), ms));
+
+    const p = echo('example', 5000).then((data) => {
+        console.log('Done', data);
+    }).then(() => {
+        console.log('Done2');
+    });
+
+    p.then(() => {
+        console.log('Done3');
+    });
+
+    setTimeout(() => {
+        p.then(() => {
+            console.log('Done4');
+        }).then(() => {
+            return echo('new example', 1000);
+        }).then((data) => {
+            console.log('Done5', data);
+        })
+    }, 6000);
+
+
+</script>
+
+</body>
+</html>
