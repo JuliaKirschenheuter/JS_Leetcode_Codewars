@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<script>
+    'use strict';
+
+    function sumOfArguments(...args) {
+        return [].reduce.call([...args], (a, b) => a + b);
+    }
+
+    function applyFunctionToArguments(f, ...args) {
+        return f.apply(this, ...args);
+    }
+
+    let sumOfArgs = applyFunctionToArguments(sumOfArguments, 8, -6, 4);
+    console.log(sumOfArgs)
+
+</script>
+
+</body>
+</html>
