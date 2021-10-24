@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<script>
+
+    'use strict'
+
+    function greet(greeting, name) {
+        return greeting + ' ' + name;
+    }
+
+    function partial(func, partials) {
+        return function (args) {
+            return func.call(this, partials, args)
+        }
+    }
+
+    const sayHelloTo = partial(greet, 'hello');
+    console.log(sayHelloTo('fred'));
+
+
+</script>
+
+
+
+</body>
+</html>
