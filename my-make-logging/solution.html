@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<script>
+    'use strict';
+
+    let work = (a) => `work ${a}`;
+    let workSum = (a,b) => a+b;
+
+    function makeLoggingWithOneArg(f, log) {
+        return function (arg) {
+            let result = f.call(this, arg);
+            log.push(result);
+        }
+    }
+
+    let log = [];
+    work = makeLoggingWithOneArg(work, log);
+    work(2);
+    work(3);
+    work(4);
+    work(5);
+    log.forEach(singleLog => console.log(singleLog))
+
+    function makeLoggingWithSeveralArg(f, log) {
+        return function (...args) {
+            let result = f.apply(this, args);
+            log.push(result)
+        }
+    }
+
+    let logSum = [];
+    workSum = makeLoggingWithSeveralArg(workSum, logSum);
+
+    workSum(2,3);
+    workSum(4,5);
+    workSum(8,2);
+    logSum.forEach(singleLog => console.log(singleLog))
+</script>
+
+</body>
+</html>
