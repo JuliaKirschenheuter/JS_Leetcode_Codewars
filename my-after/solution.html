@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<script>
+    'use strict';
+
+    const sum = (a, b) => a+b;
+
+    function after(n, func) {
+        let numberOfCalls = 0;
+
+        return function (...args) {
+            numberOfCalls++;
+            if (numberOfCalls === n) {
+                return func.apply(this, args)
+            }
+        }
+    }
+
+    const afterSum = after(3, sum);
+    console.log(afterSum(2,3));
+    console.log(afterSum(2,3));
+    console.log(afterSum(2,3));
+    console.log(afterSum(2,3));
+
+</script>
+
+</body>
+</html>
