@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<input id="input1" type="text">
+
+    <script>
+        'use strict';
+
+        let sum = (a,b) => a+b;
+
+        function debounce(func, delay) {
+            let timerId;
+            return function (...args) {
+                if (timerId) {
+                    clearTimeout(timerId);
+                }
+                timerId = setTimeout(() => {
+                    func.apply(this, args)
+                }, delay);
+            };
+        }
+
+        const input1 = document.querySelector('#input1');
+
+        function getDetails(event) {
+            console.log(event.target.value);
+        }
+
+        getDetails = debounce(getDetails, 1000);
+
+        input1.addEventListener('input', (event => getDetails(event)));
+
+        // const debouncedSum = debounce(sum, 2000);
+        // console.log(debouncedSum(5,2))
+
+    </script>
+
+</body>
+</html>
