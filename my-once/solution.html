@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+
+<script>
+    'use strict';
+
+    const sum = (a,b) => a+b;
+
+    function once (func) {
+        let wasCalled = false;
+        return function (...args) {
+            if (wasCalled === false) {
+                wasCalled = true
+                // не возвращаетя результат
+                // На практике такие функции использовали, когда функции не возвращали значение, а имели какие-то побочные эффекты.
+                // Например, какие-то асинхронные операции
+                // Иначе вводит в заблуждение старый результат при вызове с новыми аргументами
+                func.apply(this, args)
+            }
+        }
+    }
+
+    let onceSum = once(sum);
+    console.log(onceSum(2,3));
+    console.log(onceSum(2,3));
+    console.log(onceSum(2,3));
+    console.log(onceSum(2,3));
+
+
+
+
+</script>
+</body>
+</html>
