@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<script>
+    'use strict';
+
+    const random = (x) => Math.random() * x;
+
+    function makeCaching(func) {
+        let map = new Map();
+
+        return function (a) {
+            let result = func.call(this, a);
+            if (!map.has(a)) {
+                map.set(a, result)
+            }
+            return map.get(a)
+        }
+    }
+
+    const randomWithCaching = makeCaching(random);
+    console.log(randomWithCaching(1));
+    console.log(randomWithCaching(1));
+    console.log(randomWithCaching(1));
+
+    console.log(randomWithCaching(2));
+    console.log(randomWithCaching(2));
+
+
+
+</script>
+
+</body>
+</html>
