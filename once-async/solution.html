@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+
+    // Требуется сделать функцию, которая принимает на вход асинхронную функцию foo, а возвращает функцию для её запуска.
+    // Новая функция не должна позволять запускать foo параллельно.
+    // То есть, пока предыдущий запуск foo выполняется - вызов новой функции ничего не делает.
+    // А когда завершился - новый запуск уже запускает новую асинхронную операцию
+
+    'use strict'
+
+    async function asyncSleep(url) {
+        let response = await fetch(url);
+        return await response.json();
+    }
+
+    async function asyncSleepLog(ms, message) {
+        return new Promise((resolve) => {
+            setTimeout(() => {
+                console.log(message);
+                resolve();
+            }, ms);
+        });
+    }
+
+    // asyncSleep().then(res => console.log(res))
+
+    function onceAsync(asyncFunction) {
+        // let status = 'idle';
+        let promiseResult = null;
+        return function (...args) {
+            // if (status === 'pending') {
+            if (promiseResult) {
+                return promiseResult
+            } else {
+                // status = 'pending'
+                promiseResult = asyncFunction.apply(this, args)
+                .finally(() => {
+                    // status = 'resolved'
+                    promiseResult = null;
+                });
+                return promiseResult
+            }
+        }
+    }
+
+    const onceSleep = onceAsync(asyncSleepLog);
+
+    onceSleep(5000, 'https://jsonplaceholder.typicode.com/todos').then(() => { console.log('Done1'); }); // запускает asyncSleep
+    onceSleep(5000, 'https://jsonplaceholder.typicode.com/todos').then(() => { console.log('Done2'); }); // игнор
+    onceSleep(5000, 'https://jsonplaceholder.typicode.com/todos').then(() => { console.log('Done3'); }); // игнор
+
+    setTimeout(() => {
+        onceSleep(5000) // снова запускает, старая завершилась
+        onceSleep(5000) // игнор
+    }, 10000)
+
+
+</script>
+
+</body>
+</html>
