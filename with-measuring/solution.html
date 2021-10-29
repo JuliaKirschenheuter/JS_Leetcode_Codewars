@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script>
+    'use strict'
+
+    // Реализовать функцию декоратор для создания функций с вычислением времени работы другой асинхронной функции.
+    // `withMeasuring(func): Function`
+    // В прошлом задании функция `runWithMeasuring(func, ...args)` сразу запускала функцию.
+    // В этой задаче требуется сделать функцию, которая сделает обёртку над этой функцией, и вернёт функцию запуска операции с вычислением.
+
+    function runWithMeasuring(func, ...args) {
+        const timeBeforeFunctionRun = Date.now();
+        return func.apply(this, args).then(result => {
+            const timeAfterFunctionRun = Date.now()
+            return {
+                result: result,
+                error: null,
+                duration: Math.floor(timeAfterFunctionRun - timeBeforeFunctionRun)
+            }
+        })
+    }
+
+
+    function withMeasuring(func) {
+        return function(...args) {
+            return runWithMeasuring.apply(this, [func, ...args])
+        }
+    }
+
+    const axiosGetWithMeasuring = withMeasuring(window.axios.get);
+
+    axiosGetWithMeasuring('https://jsonplaceholder.typicode.com/todos').then(result => console.log(result))
+
+
+</script>
+
+</body>
+</html>
