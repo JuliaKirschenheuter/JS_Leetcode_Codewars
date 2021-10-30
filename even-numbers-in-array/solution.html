@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<script>
+    'use strict';
+
+    //https://www.codewars.com/kata/5a431c0de1ce0ec33a00000c
+
+    function evenNumbers(array, number) {
+        let evenArr = array.filter(a => a%2 === 0);
+        return array.filter(a => a%2 === 0).slice(evenArr.length - number, evenArr.length)
+    }
+
+    console.log(evenNumbers([-22, 5, 3, 11, 26, -6, -7, -8, -9, -8, 26], 2))
+
+</script>
+
+</body>
+</html>
