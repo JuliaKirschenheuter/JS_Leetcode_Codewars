@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<script>
+    //https://www.codewars.com/kata/525f50e3b73515a6db000b83/train/javascript
+    'use strict';
+
+    function createPhoneNumber(numbers) {
+        let part1, part2, part3;
+        numbers.forEach((el, i, arr) => {
+            if( i< 2) {
+                part1 = `(${arr.slice(0, 3).join('')}) `
+            } else if (i > 2 && i < 5) {
+                part2 = `${arr.slice(3, 6).join('')}-`
+            } else if (i > 5 && i < arr.length-1) {
+                part3 = `${arr.slice(6, arr.length).join('')}`
+            }
+        })
+        return `${part1}${part2}${part3}`
+    }
+
+    const phone = createPhoneNumber([1, 2, 3, 4, 5, 6, 7, 8, 9, 0]);
+    console.log(phone)
+
+</script>
+
+</body>
+</html>
