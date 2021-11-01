@@ -10,18 +10,18 @@
 
     'use strict'
 
-    function greet(greeting, name) {
-        return greeting + ' ' + name;
+    function greet(greeting, name, name2) {
+        return greeting + ' ' + name + ' ' + name2;
     }
 
-    function partial(func, partials) {
-        return function (args) {
-            return func.call(this, partials, args)
+    function partial(func, ...partials) {
+        return function (...args) {
+            return func.call(this, ...partials, ...args)
         }
     }
 
     const sayHelloTo = partial(greet, 'hello');
-    console.log(sayHelloTo('fred'));
+    console.log(sayHelloTo('fred', 'fred 2'));
 
 
 </script>
