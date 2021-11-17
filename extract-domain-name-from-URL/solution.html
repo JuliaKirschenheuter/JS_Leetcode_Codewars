@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<script>
+    'use strict';
+
+    // https://www.codewars.com/kata/514a024011ea4fb54200004b/train/javascript
+
+    function domainName(url) {
+      let cutUrl = '';
+        if (url.startsWith('http://')) {
+          cutUrl = url.substring(7)
+        } else if (url.startsWith('https://')) {
+          cutUrl = url.substring(8)
+        } else {
+          cutUrl = url
+        }
+
+        if (cutUrl.startsWith('www.')) {
+          cutUrl = cutUrl.substring(4)
+        }
+        return cutUrl.split('.')[0]
+    }
+
+
+    console.log(domainName("http://github.com/carbonfive/raygun"));
+    console.log(domainName("http://www.zombie-bites.com"));
+    console.log(domainName("https://www.youtube.com"));
+    console.log(domainName("www.xakep.ru"));
+
+
+</script>
+
+</body>
+</html>
