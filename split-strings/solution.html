@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<script>
+    'use strict';
+
+    // https://www.codewars.com/kata/515de9ae9dcfc28eb6000001
+
+    function solution(str) {
+        let arrOfStr = str.split('');
+        let arrToReturn = [];
+
+        for (let i=0; i<arrOfStr.length; i++) {
+            let nextIndex = i+1;
+            if (arrOfStr.length % 2 !== 0 ) {
+                if (i === arrOfStr.length - 1) {
+                    arrToReturn.push(`${arrOfStr[i]}_`);
+                    break
+                }
+            }
+            arrToReturn.push(`${arrOfStr[i]}${arrOfStr[nextIndex]}`)
+            i = nextIndex
+        }
+        return arrToReturn
+    }
+
+    console.log(solution("abc"))
+
+
+</script>
+
+</body>
+</html>
