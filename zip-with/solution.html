@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<script>
+    'use strict';
+
+    function zipWith(fn, a0, a1) {
+        let resultArr = [];
+        let pairsArr = [];
+
+        for (let i=0; i < a0.length; i++) {
+            for (let j=i; j < a1.length; j++) {
+                pairsArr.push([a0[i], a1[j]]);
+                break
+            }
+        }
+
+        pairsArr.forEach(pair => {
+            let [a, b] = pair;
+            let fnResult = fn(a, b)
+            resultArr.push(fnResult)
+        })
+
+        return resultArr
+    }
+
+    let zip = zipWith( Math.pow, [10,10,10,10], [0,1,2,3] );
+    console.log(zip)
+
+
+</script>
+
+</body>
+</html>
