@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<script>
+    // https://www.codewars.com/kata/525f3eda17c7cd9f9e000b39
+    'use strict';
+
+    function makeDigit(argA, func) {
+        return func ? func(argA) : argA
+    }
+
+    function zero(func) {
+        return makeDigit(0, func);
+    }
+
+    function one(func) {
+        return makeDigit(1, func);
+    }
+
+    function two(func) {
+        return makeDigit(2, func);
+    }
+
+    function three(func) {
+        return makeDigit(3, func);
+    }
+
+    function four(func) {
+        return makeDigit(4, func);
+    }
+
+    function five(func) {
+        return makeDigit(5, func);
+    }
+
+    function six(func) {
+        return makeDigit(6, func);
+    }
+
+    function seven(func) {
+        return makeDigit(7, func);
+    }
+
+    function eight(func) {
+        return makeDigit(8, func);
+    }
+
+    function nine(func) {
+        return makeDigit(9, func);
+    }
+
+    function plus(a) {
+        return (b) => a + b;
+    }
+
+    function minus(a) {
+        return (b) => b - a;
+    }
+
+    function times(a) {
+        return (b) => a * b;
+    }
+
+    function dividedBy(a) {
+        return (b) => {
+            const result = Number(b / a);
+            return Math.floor(result);
+        }
+    }
+
+
+    const result = six(dividedBy(two()));
+    console.log('result: ', result)
+
+
+</script>
+
+</body>
+</html>
