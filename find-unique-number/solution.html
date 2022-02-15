@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    // https://www.codewars.com/kata/585d7d5adb20cf33cb000235/train/javascript
+    'use strict';
+
+    function findUniq(arr) {
+        let returnVal = '';
+        let mapOfEntries = new Map();
+        arr.forEach(el => {
+            if (mapOfEntries.has(el)) {
+                let newMapVal = mapOfEntries.get(el) + 1;
+                mapOfEntries.set(el, newMapVal)
+            } else {
+                mapOfEntries.set(el, 1);
+            }
+        });
+        for (let [key, value] of mapOfEntries) {
+            if (value === 1) {
+                returnVal = key
+            }
+        }
+        return returnVal
+    }
+
+    console.log(findUniq([ 1, 1, 1, 2, 1, 1 ]))
+
+
+</script>
+
+</body>
+</html>
