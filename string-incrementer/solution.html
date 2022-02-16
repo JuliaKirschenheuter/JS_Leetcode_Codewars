@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<script>
+    'use strict';
+    // https://www.codewars.com/kata/54a91a4883a7de5d7800009c/train/javascript
+
+    function incrementString (str) {
+        const strArr = str.split('');
+        let numSubArr = [];
+        let strSub = [];
+        const numRegExp = /^[0-9]$/gi;
+        strArr.forEach((el, i) => {
+            if (el.match(numRegExp)){
+                numSubArr.push(el)
+            } else if (i === strArr.length && !el.match(numRegExp)) {
+                numSubArr.push(0)
+            }
+            else {
+                strSub.push(el)
+            }
+        });
+        const originalNum = numSubArr.join('');
+        const originalStr = strSub.join('');
+        const numberOfDigits = numSubArr.length;
+        const increasedNum = Number(originalNum) + 1;
+        const padded = String(increasedNum).padStart(numberOfDigits, "0");
+
+        return originalStr.concat(padded)
+    }
+
+    console.log(incrementString("foo"))
+
+</script>
+
+</body>
+</html>
